@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %} {% load rangepaginator %} {% block content %}
+<h2 class="mb-3">Posts by {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h2>
+{% for post in posts %}
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="{% url 'blog:user-posts' post.author.username %}">{{ post.author.username }}</a>
+            <small class="text-muted">{{ post.date_posted|date:"F d, Y " }}</small>
+        </div>
+        <h2><a class="article-title" href="{% url 'blog:post-detail' post.id %}">{{ post.title }}</a></h2>
+        <p class="article-content">{{ post.content }}</p>
+    </div>
+</article>
+
+{% endfor %}
+<div class="row align-items-center justify-content-center">
+    <div class="mb-3">
+        {% paginate page_obj distance=2 edge=1 request=request %}
+    </div>
+
+
+
+</div> {% endblock %}
